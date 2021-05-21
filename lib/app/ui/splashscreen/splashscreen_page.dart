@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:pokedex/app/services/pokemon_service.dart';
+import 'package:pokedex/app/repositories/pokemon_repository.dart';
 import 'package:pokedex/colors.dart';
 
 class SplashscreenPage extends StatefulWidget {
-
   @override
   _SplashscreenPageState createState() => _SplashscreenPageState();
 }
 
 class _SplashscreenPageState extends State<SplashscreenPage> {
-@override
+  @override
   void initState() {
     super.initState();
-    final service = PokemonService();
-    service.getPokemons();
+    getPokemons();
+  }
+
+  Future<void> getPokemons() async {
+    final service = PokemonRepository();
+    final pokemons = await service.getPokemons();
+    print(pokemons);
   }
 
   @override
