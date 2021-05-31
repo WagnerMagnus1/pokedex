@@ -32,13 +32,18 @@ class _HomePageState extends State<HomePage> {
               'Pokedex',
               style: TextStyle(color: black),
             ),
-            SizedBox(height: 10,),
+            SizedBox(
+              height: 10,
+            ),
             TextField(
               textAlign: TextAlign.start,
               // controller: searchCtrl,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
-                prefixIcon: Icon(Icons.search, color: mono,),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: mono,
+                ),
                 hintText: 'Encontre um pokémon',
                 hintStyle: TextStyle(fontSize: 16, color: mono),
                 border: OutlineInputBorder(
@@ -49,8 +54,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 filled: true,
-                
-                contentPadding: EdgeInsets.all(16),
+                contentPadding: EdgeInsets.all(0),
                 // fillColor: colorSearchBg,
               ),
             ),
@@ -58,6 +62,39 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       body: Container(
+        margin: EdgeInsets.only(top: 15),
+        color: white,
+        child: ListView.separated(
+          separatorBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: Divider(
+              color: divider,
+              thickness: 1.0,
+            ),
+          ),
+          padding: EdgeInsets.symmetric(vertical: 10),
+          physics: BouncingScrollPhysics(),
+          itemCount: widget.pokemons.length,
+          scrollDirection: Axis.vertical,
+          itemBuilder: (context, index) {
+            final pokemon = widget.pokemons[index];
+            return ListTile(
+              contentPadding: EdgeInsets.all(10),
+              focusColor: primaryColor0,
+              leading: Image.network(pokemon.imageUrl),
+              title: Text(pokemon.name),
+            );
+            // return GestureDetector(
+
+            //   child: Row(
+            //     children: [
+            //       Image.network(pokemon.imageUrl, height: 50,),
+            //       Text(pokemon.name),
+            //     ],
+            //   ),
+            // );
+          },
+        ),
       ),
     );
   }
