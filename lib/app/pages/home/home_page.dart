@@ -18,8 +18,27 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  TextEditingController searchController = TextEditingController(text: '');
+
+  List<PokemonModel> getPokemonFiltered(String _text) {
+    if (_text.length >= 1) {
+      final pokemons = <PokemonModel>[];
+      for (final pokemon in widget.pokemons) {
+        final pokemonName = pokemon.name.toLowerCase();
+        if (pokemonName.contains(_text.toLowerCase())) {
+          pokemons.add(pokemon);
+        }
+      }
+      return pokemons;
+    } else {
+      return widget.pokemons;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    var listPokemonsFilted = getPokemonFiltered(searchController.value.text);
+
     return Scaffold(
       backgroundColor: primaryColor0,
       appBar: AppBar(
@@ -39,7 +58,12 @@ class _HomePageState extends State<HomePage> {
             ),
             TextField(
               textAlign: TextAlign.start,
-              // controller: searchCtrl,
+              controller: searchController,
+              onChanged: (String text) {
+                setState(() {
+                listPokemonsFilted = getPokemonFiltered(text);
+                });
+              },
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 prefixIcon: Icon(
@@ -76,10 +100,10 @@ class _HomePageState extends State<HomePage> {
           ),
           padding: EdgeInsets.symmetric(vertical: 10),
           physics: BouncingScrollPhysics(),
-          itemCount: widget.pokemons.length,
+          itemCount: listPokemonsFilted.length,
           scrollDirection: Axis.vertical,
           itemBuilder: (context, index) {
-            final pokemon = widget.pokemons[index];
+            final pokemon = listPokemonsFilted[index];
             return ListTile(
               contentPadding: EdgeInsets.symmetric(horizontal: 15),
               leading: Hero(
