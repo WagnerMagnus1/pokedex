@@ -54,31 +54,12 @@ class _DetailsPokedexPageState extends State<DetailsPokedexPage> {
                       children: [
                         Text(
                           pokemonModel.name,
-                          style: TextStyle(fontSize: 24, color: Colors.black54),
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.black54,
+                          ),
                         ),
-                        SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Row(
-                              children: pokemonModel.types
-                                  .map<Widget>((e) => Chip(
-                                        backgroundColor: color,
-                                        label: Row(
-                                          children: [
-                                            Container(
-                                              padding:
-                                                  EdgeInsets.only(right: 20),
-                                              child: _iconType(e.name),
-                                            ),
-                                            Text(
-                                              e.name,
-                                              style: TextStyle(
-                                                  color: Colors.white),
-                                            )
-                                          ],
-                                        ),
-                                      ))
-                                  .toList()),
-                        )
+                        _typesPokemon()
                       ],
                     ),
                   ),
@@ -86,16 +67,40 @@ class _DetailsPokedexPageState extends State<DetailsPokedexPage> {
               ),
             ],
           ),
-          Container(
-            transform: Matrix4.translationValues(0.0, -120, 0.0),
-            child: Center(
-              child: Image.network(
-                pokemonModel.imageUrl,
-                scale: 3,
-              ),
-            ),
-          )
+          _imagePokemon(),
         ],
+      ),
+    );
+  }
+
+  _imagePokemon() {
+    return Container(
+      transform: Matrix4.translationValues(0.0, -120, 0.0),
+      child: Center(
+        child: Image.network(
+          pokemonModel.imageUrl,
+          scale: 3,
+        ),
+      ),
+    );
+  }
+
+  _typesPokemon() {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: pokemonModel.types
+            .map<Widget>((e) => Chip(
+                  backgroundColor: color,
+                  avatar: _iconType(e.name),
+                  shadowColor: color,
+                  elevation: 4,
+                  label: Text(
+                    e.name,
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ))
+            .toList(),
       ),
     );
   }
