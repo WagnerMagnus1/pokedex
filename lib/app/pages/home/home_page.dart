@@ -93,10 +93,18 @@ class _HomePageState extends State<HomePage> {
                     itemCount: pokemon.types.length,
                     itemBuilder: (context, index) {
                       final type = pokemon.types[index];
-                      return CircleAvatar(
-                        backgroundColor: Colors.green,
-                        child: SvgPicture.asset(
-                          type.imagePath,
+                      return Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        decoration: BoxDecoration(
+                          color: white,
+                          shape: BoxShape.circle,
+                          boxShadow: [BoxShadow(blurRadius: 10, color: mono2, spreadRadius: 1)],
+                        ),
+                        child: CircleAvatar(
+                          backgroundColor: type.imageColorAvatar,
+                          child: SvgPicture.asset(
+                            type.imagePath,
+                          ),
                         ),
                       );
                     },
