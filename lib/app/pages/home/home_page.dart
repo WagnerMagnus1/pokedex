@@ -80,19 +80,11 @@ class _HomePageState extends State<HomePage> {
             final pokemon = widget.pokemons[index];
             return ListTile(
               contentPadding: EdgeInsets.all(10),
-              focusColor: primaryColor0,
               leading: Image.network(pokemon.imageUrl),
-              title: Text(pokemon.name),
+              title: Text(pokemon.name, style: TextStyle(color: mono1)),
+              subtitle: Text(index.toString().padLeft(3, '#0'), style: TextStyle(color: mono2),),
+              onTap: () {},
             );
-            // return GestureDetector(
-
-            //   child: Row(
-            //     children: [
-            //       Image.network(pokemon.imageUrl, height: 50,),
-            //       Text(pokemon.name),
-            //     ],
-            //   ),
-            // );
           },
         ),
       ),
