@@ -4,6 +4,12 @@ import 'package:pokedex/app/models/pokemon_model.dart';
 import 'package:pokedex/app/models/type_model.dart';
 
 class DetailsPokedexPage extends StatefulWidget {
+
+  final List<PokemonModel> pokemons;
+  final int indexCurrentPokemon;
+
+  DetailsPokedexPage(this.pokemons, this.indexCurrentPokemon);
+
   @override
   _DetailsPokedexPageState createState() => _DetailsPokedexPageState();
 }

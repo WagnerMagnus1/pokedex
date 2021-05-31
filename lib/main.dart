@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pokedex/app/pages/details/details_pokedex_page.dart';
+import 'package:pokedex/app/pages/home/home_page.dart';
 import 'package:pokedex/colors.dart';
 
 import 'app/pages/splashscreen/splashscreen_page.dart';
@@ -17,13 +18,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
       theme: ThemeData(
         fontFamily: 'Poppins',
         primarySwatch: Colors.blue,
         primaryColor: primaryColor
       ),
-      home: DetailsPokedexPage(),
+      home: SplashscreenPage(),
     );
   }
 }
