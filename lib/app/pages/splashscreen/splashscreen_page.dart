@@ -18,7 +18,6 @@ class _SplashscreenPageState extends State<SplashscreenPage> {
   Future<void> getPokemons() async {
     final service = PokemonRepository();
     final pokemons = await service.getPokemons();
-    print(pokemons);
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(

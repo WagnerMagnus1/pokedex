@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:pokedex/app/models/pokemon_model.dart';
 import 'package:pokedex/colors.dart';
@@ -79,10 +80,35 @@ class _HomePageState extends State<HomePage> {
           itemBuilder: (context, index) {
             final pokemon = widget.pokemons[index];
             return ListTile(
-              contentPadding: EdgeInsets.all(10),
+              contentPadding: EdgeInsets.symmetric(horizontal: 15),
               leading: Image.network(pokemon.imageUrl),
               title: Text(pokemon.name, style: TextStyle(color: mono1)),
-              subtitle: Text(index.toString().padLeft(3, '#0'), style: TextStyle(color: mono2),),
+              trailing: Container(
+                width: 170,
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: pokemon.types.length,
+                    itemBuilder: (context, index) {
+                      final type = pokemon.types[index];
+                      return CircleAvatar(
+                        backgroundColor: Colors.green,
+                        child: SvgPicture.asset(
+                          type.imagePath,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              subtitle: Text(
+                '#' + index.toString().padLeft(3, '0'),
+                style: TextStyle(color: mono2),
+              ),
+              selectedTileColor: primaryColor0,
+              selected: true,
               onTap: () {},
             );
           },
