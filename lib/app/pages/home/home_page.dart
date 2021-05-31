@@ -23,17 +23,41 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: appBarColor2,
         centerTitle: true,
+        toolbarHeight: 125,
         title: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               'Pokedex',
               style: TextStyle(color: black),
             ),
+            SizedBox(height: 10,),
+            TextField(
+              textAlign: TextAlign.start,
+              // controller: searchCtrl,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.search, color: mono,),
+                hintText: 'Encontre um pokémon',
+                hintStyle: TextStyle(fontSize: 16, color: mono),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(25),
+                  borderSide: BorderSide(
+                    width: 0,
+                    style: BorderStyle.none,
+                  ),
+                ),
+                filled: true,
+                
+                contentPadding: EdgeInsets.all(16),
+                // fillColor: colorSearchBg,
+              ),
+            ),
           ],
         ),
       ),
       body: Container(
-        child: Text('HOME'),
       ),
     );
   }
