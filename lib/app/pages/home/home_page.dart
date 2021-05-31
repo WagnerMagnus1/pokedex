@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:pokedex/app/models/pokemon_model.dart';
+import 'package:pokedex/app/pages/details/details_pokedex_page.dart';
 import 'package:pokedex/colors.dart';
 
 class HomePage extends StatefulWidget {
@@ -117,7 +118,11 @@ class _HomePageState extends State<HomePage> {
               ),
               selectedTileColor: primaryColor0,
               selected: true,
-              onTap: () {},
+              onTap: () {
+
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPokedexPage(widget.pokemons, index)));
+
+              },
             );
           },
         ),

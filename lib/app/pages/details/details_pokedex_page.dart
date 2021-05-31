@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pokedex/app/models/pokemon_model.dart';
-import 'package:pokedex/app/models/type_model.dart';
 
 class DetailsPokedexPage extends StatefulWidget {
-
   final List<PokemonModel> pokemons;
   final int indexCurrentPokemon;
 
@@ -16,78 +15,99 @@ class DetailsPokedexPage extends StatefulWidget {
 
 class _DetailsPokedexPageState extends State<DetailsPokedexPage> {
   late Size size;
+  late PokemonModel currentPokemon;
 
-  final color = Colors.blue;
+  var _pageController = PageController();
 
-  final pokemonModel = PokemonModel(
-    name: 'Squirtle',
-    url: 'https://pokeapi.co/api/v2/pokemon/7',
-    imageUrl:
-        'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png',
-    types: [
-      TypeModel(name: 'water', url: 'https://pokeapi.co/api/v2/type/11/'),
-    ],
-  );
+  @override
+  void initState() {
+    currentPokemon = widget.pokemons[widget.indexCurrentPokemon];
+
+    //Faz o pageview pular para o index do pokemon selecionado
+    SchedulerBinding.instance!.addPostFrameCallback((_) {
+      _pageController.jumpToPage(widget.indexCurrentPokemon);
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: color,
+      backgroundColor: currentPokemon.types.first.imageColorAvatar,
+      appBar: AppBar(
+        backgroundColor: currentPokemon.types.first.imageColorAvatar,
+        elevation: 0,
+      ),
       body: Stack(
         children: [
-          Column(
-            children: [
-              Container(
-                height: size.height * 0.4,
-                color: color,
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                  ),
+          SingleChildScrollView(
+            physics: NeverScrollableScrollPhysics(),
+            child: Column(
+              children: [
+                Container(
+                  height: size.height * 0.3,
+                  color: currentPokemon.types.first.imageColorAvatar,
                 ),
-                height: size.height * 0.6,
-                width: size.width,
-                child: SingleChildScrollView(
-                  child: Container(
-                    margin: EdgeInsets.only(top: 50),
-                    child: Column(
-                      children: [
-                        Text(
-                          pokemonModel.name,
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.black54,
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40),
+                    ),
+                  ),
+                  height: size.height * 0.6,
+                  width: size.width,
+                  child: SingleChildScrollView(
+                    child: Container(
+                      margin: EdgeInsets.only(top: 50),
+                      child: Column(
+                        children: [
+                          Text(
+                            currentPokemon.name,
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: Colors.black54,
+                            ),
                           ),
-                        ),
-                        _typesPokemon()
-                      ],
+                          _typesPokemon()
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-          _imagePokemon(),
+          _pageViewPokemons(),
         ],
       ),
     );
   }
 
-  _imagePokemon() {
-    return Container(
-      transform: Matrix4.translationValues(0.0, -120, 0.0),
-      child: Center(
-        child: Image.network(
-          pokemonModel.imageUrl,
-          scale: 3,
-        ),
-      ),
+  _pageViewPokemons() {
+    return PageView.builder(
+      controller: _pageController,
+      itemCount: widget.pokemons.length,
+      onPageChanged: (int page) {
+        currentPokemon = widget.pokemons[page];
+
+        setState(() {});
+      },
+      itemBuilder: (context, index) {
+        return Container(
+          transform: Matrix4.translationValues(0.0, -150, 0.0),
+          child: Center(
+            child: Image.network(
+              currentPokemon.imageUrl,
+              scale: 3,
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -95,15 +115,18 @@ class _DetailsPokedexPageState extends State<DetailsPokedexPage> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: pokemonModel.types
-            .map<Widget>((e) => Chip(
-                  backgroundColor: color,
-                  avatar: _iconType(e.name),
-                  shadowColor: color,
-                  elevation: 4,
-                  label: Text(
-                    e.name,
-                    style: TextStyle(color: Colors.white),
+        children: currentPokemon.types
+            .map<Widget>((e) => Container(
+                  padding: EdgeInsets.only(right: 10),
+                  child: Chip(
+                    backgroundColor: e.imageColorAvatar,
+                    avatar: _iconType(e.name),
+                    shadowColor: e.imageColorAvatar,
+                    elevation: 4,
+                    label: Text(
+                      e.name,
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 ))
             .toList(),
