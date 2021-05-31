@@ -12,7 +12,7 @@ class PokemonRepository {
   Future<List<PokemonModel>> getPokemons() async {
     List<PokemonModel> pokemonList = [];
     try {
-      final response = await dio.get('pokemon?limit=150');
+      final response = await dio.get('pokemon?limit=10');
       if (response.statusCode == 200) {
         final listResult = response.data['results'];
         for(var item in listResult) {

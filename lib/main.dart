@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pokedex/colors.dart';
 
-import 'app/ui/splashscreen/splashscreen_page.dart';
+import 'app/pages/splashscreen/splashscreen_page.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
@@ -17,7 +18,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        fontFamily: 'Poppins',
         primarySwatch: Colors.blue,
+        primaryColor: primaryColor
       ),
       home: SplashscreenPage(),
     );
