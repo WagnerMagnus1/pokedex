@@ -82,7 +82,10 @@ class _HomePageState extends State<HomePage> {
             final pokemon = widget.pokemons[index];
             return ListTile(
               contentPadding: EdgeInsets.symmetric(horizontal: 15),
-              leading: Image.network(pokemon.imageUrl),
+              leading: Hero(
+                tag: pokemon.imageUrl,
+                child: Image.network(pokemon.imageUrl),
+              ),
               title: Text(pokemon.name, style: TextStyle(color: mono1)),
               trailing: Container(
                 width: 170,
@@ -99,7 +102,10 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           color: white,
                           shape: BoxShape.circle,
-                          boxShadow: [BoxShadow(blurRadius: 10, color: mono2, spreadRadius: 1)],
+                          boxShadow: [
+                            BoxShadow(
+                                blurRadius: 10, color: mono2, spreadRadius: 1)
+                          ],
                         ),
                         child: CircleAvatar(
                           backgroundColor: type.imageColorAvatar,
@@ -119,9 +125,11 @@ class _HomePageState extends State<HomePage> {
               selectedTileColor: primaryColor0,
               selected: true,
               onTap: () {
-
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsPokedexPage(widget.pokemons, index)));
-
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            DetailsPokedexPage(widget.pokemons, index)));
               },
             );
           },

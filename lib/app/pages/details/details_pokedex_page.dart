@@ -98,12 +98,15 @@ class _DetailsPokedexPageState extends State<DetailsPokedexPage> {
         setState(() {});
       },
       itemBuilder: (context, index) {
-        return Container(
-          transform: Matrix4.translationValues(0.0, -150, 0.0),
-          child: Center(
-            child: Image.network(
-              currentPokemon.imageUrl,
-              scale: 3,
+        return Hero(
+          tag: currentPokemon.imageUrl,
+          child: Container(
+            transform: Matrix4.translationValues(0.0, -150, 0.0),
+            child: Center(
+              child: Image.network(
+                currentPokemon.imageUrl,
+                scale: 3,
+              ),
             ),
           ),
         );
@@ -120,7 +123,7 @@ class _DetailsPokedexPageState extends State<DetailsPokedexPage> {
                   padding: EdgeInsets.only(right: 10),
                   child: Chip(
                     backgroundColor: e.imageColorAvatar,
-                    avatar: _iconType(e.name),
+                    avatar: SvgPicture.asset(e.imagePath),
                     shadowColor: e.imageColorAvatar,
                     elevation: 4,
                     label: Text(
@@ -131,12 +134,6 @@ class _DetailsPokedexPageState extends State<DetailsPokedexPage> {
                 ))
             .toList(),
       ),
-    );
-  }
-
-  _iconType(String assetName) {
-    return SvgPicture.asset(
-      'assets/types/$assetName.svg',
     );
   }
 }
