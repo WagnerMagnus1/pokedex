@@ -24,7 +24,6 @@ class _DetailsPageState extends State<DetailsPage> {
 
   var _pageviewController = PageController();
 
-
   @override
   void initState() {
     SchedulerBinding.instance!.addPostFrameCallback((_) {
@@ -42,7 +41,7 @@ class _DetailsPageState extends State<DetailsPage> {
       return Scaffold(
         backgroundColor: widget.store.pokemonSelected.types.first.imageColorAvatar,
         appBar: AppBar(
-          backgroundColor:  widget.store.pokemonSelected.types.first.imageColorAvatar,
+          backgroundColor: widget.store.pokemonSelected.types.first.imageColorAvatar,
           elevation: 0,
         ),
         body: Stack(
@@ -51,7 +50,7 @@ class _DetailsPageState extends State<DetailsPage> {
               children: [
                 Container(
                   height: size.height * 0.3,
-                  color:  widget.store.pokemonSelected.types.first.imageColorAvatar,
+                  color: widget.store.pokemonSelected.types.first.imageColorAvatar,
                 ),
                 Expanded(
                   child: Container(
@@ -69,7 +68,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       child: Column(
                         children: [
                           Text(
-                             widget.store.pokemonSelected.name,
+                            widget.store.pokemonSelected.name,
                             style: TextStyle(
                               fontSize: 24,
                               color: Colors.black54,
@@ -94,18 +93,17 @@ class _DetailsPageState extends State<DetailsPage> {
     return PageView.builder(
       controller: _pageviewController,
       itemCount: widget.pokemons.length,
-      
       onPageChanged: (int page) {
         widget.store.setPokemonSelected(pokemons[page]);
       },
-      scrollBehavior: ScrollBehavior(), 
+      scrollBehavior: ScrollBehavior(),
       itemBuilder: (context, index) {
         return Hero(
-          tag:  widget.store.pokemonSelected.imageUrl,
+          tag: widget.store.pokemonSelected.imageUrl,
           child: Container(
             transform: Matrix4.translationValues(0.0, -size.height / 5, 0.0),
             child: Image.network(
-               widget.store.pokemonSelected.imageUrl,
+              widget.store.pokemonSelected.imageUrl,
               scale: 3,
             ),
           ),
@@ -118,7 +116,7 @@ class _DetailsPageState extends State<DetailsPage> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children:  widget.store.pokemonSelected.types
+        children: widget.store.pokemonSelected.types
             .map<Widget>((e) => Container(
                   padding: EdgeInsets.only(right: 10),
                   child: Chip(

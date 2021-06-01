@@ -7,6 +7,7 @@ import 'package:pokedex/colors.dart';
 
 import 'home_controller.dart';
 
+// ignore: must_be_immutable
 class HomePage extends StatefulWidget {
   List<PokemonModel> pokemons;
 
@@ -116,7 +117,7 @@ class ListPokemonWidget extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => DetailsPage(
-                pokemons: controller.pokemonStore.pokemons,
+                pokemons: controller.pokemonStore.pokemonsFiltered,
                 indexCurrentPokemon: index,
                 store: controller.pokemonStore,
               ),

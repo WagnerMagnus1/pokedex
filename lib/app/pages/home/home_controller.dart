@@ -1,12 +1,7 @@
-import 'package:mobx/mobx.dart';
 import 'package:pokedex/app/models/pokemon_model.dart';
 import 'package:pokedex/app/shared/stores/pokemon_store.dart';
 
-part 'home_controller.g.dart';
-
-class HomeController = _HomeControllerBase with _$HomeController;
-
-abstract class _HomeControllerBase with Store {
+ class HomeController{
   PokemonStore pokemonStore = PokemonStore();
 
   void getPokemonFiltered(String _text) {
