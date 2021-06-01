@@ -1,12 +1,11 @@
 import 'package:mobx/mobx.dart';
 import 'package:pokedex/app/models/pokemon_model.dart';
 
-part 'home_store.g.dart';
+part 'pokemon_store.g.dart';
 
-class HomeStore = _HomeStoreBase with _$HomeStore;
+class PokemonStore = _PokemonStoreBase with _$PokemonStore;
 
-abstract class _HomeStoreBase with Store {
-
+abstract class _PokemonStoreBase with Store {
   @observable
   ObservableList<PokemonModel> pokemons = <PokemonModel>[].asObservable();
 
@@ -14,7 +13,7 @@ abstract class _HomeStoreBase with Store {
   ObservableList<PokemonModel> pokemonsFiltered = <PokemonModel>[].asObservable();
 
   @observable
-  String urlPokemonSelected = '';
+  PokemonModel pokemonSelected = PokemonModel(url: '', types: [], imageUrl: '', name: '');
 
   @action
   void setListPokemon(List<PokemonModel> value) => pokemons = value.asObservable();
@@ -23,5 +22,5 @@ abstract class _HomeStoreBase with Store {
   void setListPokemonFiltered(List<PokemonModel> value) => pokemonsFiltered = value.asObservable();
 
   @action
-  void setUrlPokemonSelected(String value) => urlPokemonSelected = value;
+  void setPokemonSelected(PokemonModel pokemon) => pokemonSelected = pokemon;
 }

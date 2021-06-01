@@ -3,13 +3,14 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pokedex/app/models/pokemon_model.dart';
-import 'package:pokedex/app/pages/details/details_page_controller.dart';
+import 'package:pokedex/app/shared/stores/pokemon_store.dart';
 
 class DetailsPage extends StatefulWidget {
   final List<PokemonModel> pokemons;
   final int indexCurrentPokemon;
+  final PokemonStore store;
 
-  DetailsPage(this.pokemons, this.indexCurrentPokemon);
+  DetailsPage({required this.pokemons, required this.indexCurrentPokemon, required this.store});
 
   @override
   _DetailsPageState createState() => _DetailsPageState();
@@ -23,13 +24,9 @@ class _DetailsPageState extends State<DetailsPage> {
 
   var _pageviewController = PageController();
 
-  final _controller = DetailsPageController();
 
   @override
   void initState() {
-    _controller.store.changeCurrentPokemon(pokemons[indexCurrentPokemon]);
-
-    //Faz o pageview pular para o index do pokemon selecionado
     SchedulerBinding.instance!.addPostFrameCallback((_) {
       _pageviewController.jumpToPage(indexCurrentPokemon);
     });
@@ -43,11 +40,9 @@ class _DetailsPageState extends State<DetailsPage> {
 
     return Observer(builder: (_) {
       return Scaffold(
-        backgroundColor:
-            _controller.currentPokemon.types.first.imageColorAvatar,
+        backgroundColor: widget.store.pokemonSelected.types.first.imageColorAvatar,
         appBar: AppBar(
-          backgroundColor:
-              _controller.currentPokemon.types.first.imageColorAvatar,
+          backgroundColor:  widget.store.pokemonSelected.types.first.imageColorAvatar,
           elevation: 0,
         ),
         body: Stack(
@@ -56,8 +51,7 @@ class _DetailsPageState extends State<DetailsPage> {
               children: [
                 Container(
                   height: size.height * 0.3,
-                  color:
-                      _controller.currentPokemon.types.first.imageColorAvatar,
+                  color:  widget.store.pokemonSelected.types.first.imageColorAvatar,
                 ),
                 Expanded(
                   child: Container(
@@ -75,7 +69,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       child: Column(
                         children: [
                           Text(
-                            _controller.currentPokemon.name,
+                             widget.store.pokemonSelected.name,
                             style: TextStyle(
                               fontSize: 24,
                               color: Colors.black54,
@@ -101,16 +95,16 @@ class _DetailsPageState extends State<DetailsPage> {
       controller: _pageviewController,
       itemCount: widget.pokemons.length,
       onPageChanged: (int page) {
-        _controller.store.changeCurrentPokemon(pokemons[page]);
+        widget.store.setPokemonSelected(pokemons[page]);
       },
       itemBuilder: (context, index) {
         return Hero(
-          tag: _controller.currentPokemon.imageUrl,
+          tag:  widget.store.pokemonSelected.imageUrl,
           child: Container(
             transform: Matrix4.translationValues(0.0, -150, 0.0),
             child: Center(
               child: Image.network(
-                _controller.currentPokemon.imageUrl,
+                 widget.store.pokemonSelected.imageUrl,
                 scale: 3,
               ),
             ),
@@ -124,7 +118,7 @@ class _DetailsPageState extends State<DetailsPage> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: _controller.currentPokemon.types
+        children:  widget.store.pokemonSelected.types
             .map<Widget>((e) => Container(
                   padding: EdgeInsets.only(right: 10),
                   child: Chip(

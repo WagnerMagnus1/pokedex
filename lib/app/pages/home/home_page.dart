@@ -26,8 +26,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    controller.homeStore.setListPokemon(widget.pokemons);
-    controller.homeStore.setListPokemonFiltered(widget.pokemons);
+    controller.pokemonStore.setListPokemon(widget.pokemons);
+    controller.pokemonStore.setListPokemonFiltered(widget.pokemons);
   }
 
   @override
@@ -45,10 +45,10 @@ class _HomePageState extends State<HomePage> {
         color: white,
         child: Observer(
           builder: (_) {
-            controller.homeStore.urlPokemonSelected;
+            controller.pokemonStore.pokemonSelected;
             return ListView.separated(
               separatorBuilder: (context, index) => Container(
-                color: controller.homeStore.urlPokemonSelected == controller.homeStore.pokemons[index].url ? primaryColor0 : white,
+                color: controller.pokemonStore.pokemonSelected == controller.pokemonStore.pokemons[index] ? primaryColor0 : white,
                 padding: const EdgeInsets.only(left: 15),
                 child: Divider(
                   height: 5,
@@ -58,10 +58,10 @@ class _HomePageState extends State<HomePage> {
               ),
               padding: EdgeInsets.symmetric(vertical: 10),
               physics: BouncingScrollPhysics(),
-              itemCount: controller.homeStore.pokemonsFiltered.length,
+              itemCount: controller.pokemonStore.pokemonsFiltered.length,
               scrollDirection: Axis.vertical,
               itemBuilder: (context, index) {
-                final pokemon = controller.homeStore.pokemonsFiltered[index];
+                final pokemon = controller.pokemonStore.pokemonsFiltered[index];
                 return ListPokemonWidget(pokemon: pokemon, controller: controller, index: index);
               },
             );
@@ -88,7 +88,7 @@ class ListPokemonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5),
-      color: controller.homeStore.urlPokemonSelected == pokemon.url ? primaryColor0 : white,
+      color: controller.pokemonStore.pokemonSelected == pokemon ? primaryColor0 : white,
       child: ListTile(
         contentPadding: EdgeInsets.symmetric(horizontal: 15),
         leading: Hero(
@@ -97,7 +97,7 @@ class ListPokemonWidget extends StatelessWidget {
         ),
         title: Text(pokemon.name,
             style: TextStyle(
-              color: controller.homeStore.urlPokemonSelected == pokemon.url ? white : mono1,
+              color: controller.pokemonStore.pokemonSelected == pokemon ? white : mono1,
             )),
         trailing: Container(
           width: 170,
@@ -111,11 +111,15 @@ class ListPokemonWidget extends StatelessWidget {
           style: TextStyle(color: mono2),
         ),
         onTap: () {
-          controller.homeStore.setUrlPokemonSelected(pokemon.url);
+          controller.pokemonStore.setPokemonSelected(pokemon);
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => DetailsPage(controller.homeStore.pokemons, index),
+              builder: (context) => DetailsPage(
+                pokemons: controller.pokemonStore.pokemons,
+                indexCurrentPokemon: index,
+                store: controller.pokemonStore,
+              ),
             ),
           );
         },

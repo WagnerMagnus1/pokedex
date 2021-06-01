@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'home_store.dart';
+part of 'pokemon_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,8 +8,8 @@ part of 'home_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$HomeStore on _HomeStoreBase, Store {
-  final _$pokemonsAtom = Atom(name: '_HomeStoreBase.pokemons');
+mixin _$PokemonStore on _PokemonStoreBase, Store {
+  final _$pokemonsAtom = Atom(name: '_PokemonStoreBase.pokemons');
 
   @override
   ObservableList<PokemonModel> get pokemons {
@@ -24,7 +24,8 @@ mixin _$HomeStore on _HomeStoreBase, Store {
     });
   }
 
-  final _$pokemonsFilteredAtom = Atom(name: '_HomeStoreBase.pokemonsFiltered');
+  final _$pokemonsFilteredAtom =
+      Atom(name: '_PokemonStoreBase.pokemonsFiltered');
 
   @override
   ObservableList<PokemonModel> get pokemonsFiltered {
@@ -39,55 +40,54 @@ mixin _$HomeStore on _HomeStoreBase, Store {
     });
   }
 
-  final _$urlPokemonSelectedAtom =
-      Atom(name: '_HomeStoreBase.urlPokemonSelected');
+  final _$pokemonSelectedAtom = Atom(name: '_PokemonStoreBase.pokemonSelected');
 
   @override
-  String get urlPokemonSelected {
-    _$urlPokemonSelectedAtom.reportRead();
-    return super.urlPokemonSelected;
+  PokemonModel get pokemonSelected {
+    _$pokemonSelectedAtom.reportRead();
+    return super.pokemonSelected;
   }
 
   @override
-  set urlPokemonSelected(String value) {
-    _$urlPokemonSelectedAtom.reportWrite(value, super.urlPokemonSelected, () {
-      super.urlPokemonSelected = value;
+  set pokemonSelected(PokemonModel value) {
+    _$pokemonSelectedAtom.reportWrite(value, super.pokemonSelected, () {
+      super.pokemonSelected = value;
     });
   }
 
-  final _$_HomeStoreBaseActionController =
-      ActionController(name: '_HomeStoreBase');
+  final _$_PokemonStoreBaseActionController =
+      ActionController(name: '_PokemonStoreBase');
 
   @override
   void setListPokemon(List<PokemonModel> value) {
-    final _$actionInfo = _$_HomeStoreBaseActionController.startAction(
-        name: '_HomeStoreBase.setListPokemon');
+    final _$actionInfo = _$_PokemonStoreBaseActionController.startAction(
+        name: '_PokemonStoreBase.setListPokemon');
     try {
       return super.setListPokemon(value);
     } finally {
-      _$_HomeStoreBaseActionController.endAction(_$actionInfo);
+      _$_PokemonStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setListPokemonFiltered(List<PokemonModel> value) {
-    final _$actionInfo = _$_HomeStoreBaseActionController.startAction(
-        name: '_HomeStoreBase.setListPokemonFiltered');
+    final _$actionInfo = _$_PokemonStoreBaseActionController.startAction(
+        name: '_PokemonStoreBase.setListPokemonFiltered');
     try {
       return super.setListPokemonFiltered(value);
     } finally {
-      _$_HomeStoreBaseActionController.endAction(_$actionInfo);
+      _$_PokemonStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void setUrlPokemonSelected(String value) {
-    final _$actionInfo = _$_HomeStoreBaseActionController.startAction(
-        name: '_HomeStoreBase.setUrlPokemonSelected');
+  void setPokemonSelected(PokemonModel pokemon) {
+    final _$actionInfo = _$_PokemonStoreBaseActionController.startAction(
+        name: '_PokemonStoreBase.setUrlPokemonSelected');
     try {
-      return super.setUrlPokemonSelected(value);
+      return super.setPokemonSelected(pokemon);
     } finally {
-      _$_HomeStoreBaseActionController.endAction(_$actionInfo);
+      _$_PokemonStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
@@ -96,7 +96,7 @@ mixin _$HomeStore on _HomeStoreBase, Store {
     return '''
 pokemons: ${pokemons},
 pokemonsFiltered: ${pokemonsFiltered},
-urlPokemonSelected: ${urlPokemonSelected}
+pokemonSelected: ${pokemonSelected}
     ''';
   }
 }
