@@ -34,7 +34,7 @@ class TypeModel {
       case 'dragon':
         color = Color(0xFF6238f7);
         break;
-      case 'eletric':
+      case 'electric':
         color = Color(0xFFedcf41);
         break;
       case 'fairy':

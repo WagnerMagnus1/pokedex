@@ -43,15 +43,14 @@ class _DetailsPokedexPageState extends State<DetailsPokedexPage> {
       ),
       body: Stack(
         children: [
-          SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
-            child: Column(
-              children: [
-                Container(
-                  height: size.height * 0.3,
-                  color: currentPokemon.types.first.imageColorAvatar,
-                ),
-                Container(
+          Column(
+            children: [
+              Container(
+                height: size.height * 0.3,
+                color: currentPokemon.types.first.imageColorAvatar,
+              ),
+              Expanded(
+                child: Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
@@ -59,28 +58,26 @@ class _DetailsPokedexPageState extends State<DetailsPokedexPage> {
                       topRight: Radius.circular(40),
                     ),
                   ),
-                  height: size.height * 0.6,
+                  height: size.height * 0.7,
                   width: size.width,
-                  child: SingleChildScrollView(
-                    child: Container(
-                      margin: EdgeInsets.only(top: 50),
-                      child: Column(
-                        children: [
-                          Text(
-                            currentPokemon.name,
-                            style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.black54,
-                            ),
+                  child: Container(
+                    margin: EdgeInsets.only(top: 50),
+                    child: Column(
+                      children: [
+                        Text(
+                          currentPokemon.name,
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.black54,
                           ),
-                          _typesPokemon()
-                        ],
-                      ),
+                        ),
+                        _typesPokemon()
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           _pageViewPokemons(),
         ],
@@ -93,9 +90,9 @@ class _DetailsPokedexPageState extends State<DetailsPokedexPage> {
       controller: _pageController,
       itemCount: widget.pokemons.length,
       onPageChanged: (int page) {
-        currentPokemon = widget.pokemons[page];
-
-        setState(() {});
+        setState(() {
+          currentPokemon = widget.pokemons[page];
+        });
       },
       itemBuilder: (context, index) {
         return Hero(
