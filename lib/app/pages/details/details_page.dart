@@ -65,7 +65,7 @@ class _DetailsPageState extends State<DetailsPage> {
                     height: size.height * 0.7,
                     width: size.width,
                     child: Container(
-                      margin: EdgeInsets.only(top: 50),
+                      margin: EdgeInsets.only(top: 50, bottom: 30),
                       child: Column(
                         children: [
                           Text(
@@ -94,19 +94,19 @@ class _DetailsPageState extends State<DetailsPage> {
     return PageView.builder(
       controller: _pageviewController,
       itemCount: widget.pokemons.length,
+      
       onPageChanged: (int page) {
         widget.store.setPokemonSelected(pokemons[page]);
       },
+      scrollBehavior: ScrollBehavior(), 
       itemBuilder: (context, index) {
         return Hero(
           tag:  widget.store.pokemonSelected.imageUrl,
           child: Container(
-            transform: Matrix4.translationValues(0.0, -150, 0.0),
-            child: Center(
-              child: Image.network(
-                 widget.store.pokemonSelected.imageUrl,
-                scale: 3,
-              ),
+            transform: Matrix4.translationValues(0.0, -size.height / 5, 0.0),
+            child: Image.network(
+               widget.store.pokemonSelected.imageUrl,
+              scale: 3,
             ),
           ),
         );
