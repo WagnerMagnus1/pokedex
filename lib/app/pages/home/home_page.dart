@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mobx/mobx.dart';
+
 
 import 'package:pokedex/app/models/pokemon_model.dart';
-import 'package:pokedex/app/pages/details/details_pokedex_page.dart';
+import 'package:pokedex/app/pages/details/details_page.dart';
 import 'package:pokedex/colors.dart';
 
 import 'home_controller.dart';
@@ -107,7 +107,7 @@ class ListPokemonWidget extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => DetailsPokedexPage(controller.homeStore.pokemons, index),
+            builder: (context) => DetailsPage(controller.homeStore.pokemons, index),
           ),
         );
       },
