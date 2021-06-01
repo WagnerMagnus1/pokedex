@@ -12,19 +12,13 @@ class PokemonRepository {
   Future<List<PokemonModel>> getPokemons() async {
     List<PokemonModel> pokemonList = [];
     try {
-      final response = await dio.get('pokemon?limit=100');
+      final response = await dio.get('pokemon?limit=120');
       if (response.statusCode == 200) {
         final listResult = response.data['results'];
         for(var item in listResult) {
           final pokemon = await getPokemonByUrl(item['url']);
           pokemonList.add(pokemon);
         }
-        // await listResult.map((item) async {
-        //   print(item);
-        //   final pokemon = await getPokemonByUrl(item['url']);
-        //   print(pokemon);
-        //   pokemonList.add(pokemon);
-        // });
         return pokemonList;
       } else {
         throw Exception("Erro ao acessar a api");
