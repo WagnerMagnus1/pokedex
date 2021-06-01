@@ -13,6 +13,7 @@ scripts:
   br_build_clean: $clean & $get & $runner build --delete-conflicting-outputs
 
 dependencies:
+  animate_do: ^2.0.0
   dio: ^4.0.0
   flutter_mobx: ^2.0.0
   mobx: ^2.0.1

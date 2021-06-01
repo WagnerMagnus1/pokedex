@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:pokedex/app/pages/details/details_pokedex_page.dart';
-import 'package:pokedex/app/pages/home/home_page.dart';
 import 'package:pokedex/colors.dart';
 
 import 'app/pages/splashscreen/splashscreen_page.dart';

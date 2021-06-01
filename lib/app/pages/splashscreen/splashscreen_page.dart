@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex/app/pages/home/home_page.dart';
 import 'package:pokedex/app/repositories/pokemon_repository.dart';
@@ -45,9 +46,16 @@ class _SplashscreenPageState extends State<SplashscreenPage> {
             ],
           ),
         ),
-        child: Image.asset(
-          'assets/images/poke.png',
-          scale: 1.2,
+        child: Bounce(
+          delay: Duration(seconds: 2),
+          infinite: true,
+          child: JelloIn(
+            delay: Duration(seconds: 2),
+            child: Image.asset(
+              'assets/images/poke.png',
+              scale: 1.2,
+            ),
+          ),
         ),
       ),
     );

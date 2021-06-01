@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mobx/mobx.dart';
-
 import 'package:pokedex/app/models/pokemon_model.dart';
 import 'package:pokedex/app/pages/details/details_pokedex_page.dart';
 import 'package:pokedex/colors.dart';
@@ -46,23 +44,28 @@ class _HomePageState extends State<HomePage> {
         margin: EdgeInsets.only(top: 15),
         color: white,
         child: Observer(
-          builder: (context) => ListView.separated(
-            separatorBuilder: (context, index) => Padding(
-              padding: const EdgeInsets.only(left: 15),
-              child: Divider(
-                color: divider,
-                thickness: 1.0,
+          builder: (_) {
+            controller.homeStore.urlPokemonSelected;
+            return ListView.separated(
+              separatorBuilder: (context, index) => Container(
+                color: controller.homeStore.urlPokemonSelected == controller.homeStore.pokemons[index].url ? primaryColor0 : white,
+                padding: const EdgeInsets.only(left: 15),
+                child: Divider(
+                  height: 5,
+                  color: divider,
+                  thickness: 1.0,
+                ),
               ),
-            ),
-            padding: EdgeInsets.symmetric(vertical: 10),
-            physics: BouncingScrollPhysics(),
-            itemCount: controller.homeStore.pokemonsFiltered.length,
-            scrollDirection: Axis.vertical,
-            itemBuilder: (context, index) {
-              final pokemon = controller.homeStore.pokemonsFiltered[index];
-              return ListPokemonWidget(pokemon: pokemon, controller: controller, index: index);
-            },
-          ),
+              padding: EdgeInsets.symmetric(vertical: 10),
+              physics: BouncingScrollPhysics(),
+              itemCount: controller.homeStore.pokemonsFiltered.length,
+              scrollDirection: Axis.vertical,
+              itemBuilder: (context, index) {
+                final pokemon = controller.homeStore.pokemonsFiltered[index];
+                return ListPokemonWidget(pokemon: pokemon, controller: controller, index: index);
+              },
+            );
+          },
         ),
       ),
     );
@@ -83,34 +86,40 @@ class ListPokemonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 15),
-      leading: Hero(
-        tag: pokemon.imageUrl,
-        child: Image.network(pokemon.imageUrl),
-      ),
-      title: Text(pokemon.name, style: TextStyle(color: mono1)),
-      trailing: Container(
-        width: 170,
-        child: Align(
-          alignment: Alignment.centerRight,
-          child: ListTypeWidget(pokemon: pokemon),
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5),
+      color: controller.homeStore.urlPokemonSelected == pokemon.url ? primaryColor0 : white,
+      child: ListTile(
+        contentPadding: EdgeInsets.symmetric(horizontal: 15),
+        leading: Hero(
+          tag: pokemon.imageUrl,
+          child: Image.network(pokemon.imageUrl),
         ),
-      ),
-      subtitle: Text(
-        '#' + index.toString().padLeft(3, '0'),
-        style: TextStyle(color: mono2),
-      ),
-      selectedTileColor: primaryColor0,
-      selected: true,
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => DetailsPokedexPage(controller.homeStore.pokemons, index),
+        title: Text(pokemon.name,
+            style: TextStyle(
+              color: controller.homeStore.urlPokemonSelected == pokemon.url ? white : mono1,
+            )),
+        trailing: Container(
+          width: 170,
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: ListTypeWidget(pokemon: pokemon),
           ),
-        );
-      },
+        ),
+        subtitle: Text(
+          '#' + index.toString().padLeft(3, '0'),
+          style: TextStyle(color: mono2),
+        ),
+        onTap: () {
+          controller.homeStore.setUrlPokemonSelected(pokemon.url);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DetailsPokedexPage(controller.homeStore.pokemons, index),
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -136,7 +145,9 @@ class ListTypeWidget extends StatelessWidget {
           decoration: BoxDecoration(
             color: white,
             shape: BoxShape.circle,
-            boxShadow: [BoxShadow(blurRadius: 10, color: mono2, spreadRadius: 1)],
+            boxShadow: [
+              BoxShadow(blurRadius: 10, color: mono2, spreadRadius: 1),
+            ],
           ),
           child: CircleAvatar(
             backgroundColor: type.imageColorAvatar,
@@ -194,7 +205,6 @@ class AppbarWidget extends StatelessWidget {
             ),
             filled: true,
             contentPadding: EdgeInsets.all(0),
-            // fillColor: colorSearchBg,
           ),
         ),
       ],

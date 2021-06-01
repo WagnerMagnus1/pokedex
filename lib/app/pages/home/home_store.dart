@@ -13,9 +13,15 @@ abstract class _HomeStoreBase with Store {
   @observable
   ObservableList<PokemonModel> pokemonsFiltered = <PokemonModel>[].asObservable();
 
+  @observable
+  String urlPokemonSelected = '';
+
   @action
   void setListPokemon(List<PokemonModel> value) => pokemons = value.asObservable();
 
   @action
   void setListPokemonFiltered(List<PokemonModel> value) => pokemonsFiltered = value.asObservable();
+
+  @action
+  void setUrlPokemonSelected(String value) => urlPokemonSelected = value;
 }

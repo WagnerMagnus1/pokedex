@@ -39,6 +39,22 @@ mixin _$HomeStore on _HomeStoreBase, Store {
     });
   }
 
+  final _$urlPokemonSelectedAtom =
+      Atom(name: '_HomeStoreBase.urlPokemonSelected');
+
+  @override
+  String get urlPokemonSelected {
+    _$urlPokemonSelectedAtom.reportRead();
+    return super.urlPokemonSelected;
+  }
+
+  @override
+  set urlPokemonSelected(String value) {
+    _$urlPokemonSelectedAtom.reportWrite(value, super.urlPokemonSelected, () {
+      super.urlPokemonSelected = value;
+    });
+  }
+
   final _$_HomeStoreBaseActionController =
       ActionController(name: '_HomeStoreBase');
 
@@ -65,10 +81,22 @@ mixin _$HomeStore on _HomeStoreBase, Store {
   }
 
   @override
+  void setUrlPokemonSelected(String value) {
+    final _$actionInfo = _$_HomeStoreBaseActionController.startAction(
+        name: '_HomeStoreBase.setUrlPokemonSelected');
+    try {
+      return super.setUrlPokemonSelected(value);
+    } finally {
+      _$_HomeStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 pokemons: ${pokemons},
-pokemonsFiltered: ${pokemonsFiltered}
+pokemonsFiltered: ${pokemonsFiltered},
+urlPokemonSelected: ${urlPokemonSelected}
     ''';
   }
 }
