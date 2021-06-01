@@ -1,31 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pokedex/app/models/pokemon_model.dart';
+import 'package:pokedex/app/pages/details/details_page_controller.dart';
 
-class DetailsPokedexPage extends StatefulWidget {
+class DetailsPage extends StatefulWidget {
   final List<PokemonModel> pokemons;
   final int indexCurrentPokemon;
 
-  DetailsPokedexPage(this.pokemons, this.indexCurrentPokemon);
+  DetailsPage(this.pokemons, this.indexCurrentPokemon);
 
   @override
-  _DetailsPokedexPageState createState() => _DetailsPokedexPageState();
+  _DetailsPageState createState() => _DetailsPageState();
 }
 
-class _DetailsPokedexPageState extends State<DetailsPokedexPage> {
-  late Size size;
-  late PokemonModel currentPokemon;
+class _DetailsPageState extends State<DetailsPage> {
+  List<PokemonModel> get pokemons => widget.pokemons;
+  int get indexCurrentPokemon => widget.indexCurrentPokemon;
 
-  var _pageController = PageController();
+  late Size size;
+
+  var _pageviewController = PageController();
+
+  final _controller = DetailsPageController();
 
   @override
   void initState() {
-    currentPokemon = widget.pokemons[widget.indexCurrentPokemon];
+    _controller.store.changeCurrentPokemon(pokemons[indexCurrentPokemon]);
 
     //Faz o pageview pular para o index do pokemon selecionado
     SchedulerBinding.instance!.addPostFrameCallback((_) {
-      _pageController.jumpToPage(widget.indexCurrentPokemon);
+      _pageviewController.jumpToPage(indexCurrentPokemon);
     });
 
     super.initState();
@@ -35,39 +41,41 @@ class _DetailsPokedexPageState extends State<DetailsPokedexPage> {
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
 
-    return Scaffold(
-      backgroundColor: currentPokemon.types.first.imageColorAvatar,
-      appBar: AppBar(
-        backgroundColor: currentPokemon.types.first.imageColorAvatar,
-        elevation: 0,
-      ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
-            child: Column(
+    return Observer(builder: (_) {
+      return Scaffold(
+        backgroundColor:
+            _controller.currentPokemon.types.first.imageColorAvatar,
+        appBar: AppBar(
+          backgroundColor:
+              _controller.currentPokemon.types.first.imageColorAvatar,
+          elevation: 0,
+        ),
+        body: Stack(
+          children: [
+            Column(
               children: [
                 Container(
                   height: size.height * 0.3,
-                  color: currentPokemon.types.first.imageColorAvatar,
+                  color:
+                      _controller.currentPokemon.types.first.imageColorAvatar,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40),
-                      topRight: Radius.circular(40),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(40),
+                        topRight: Radius.circular(40),
+                      ),
                     ),
-                  ),
-                  height: size.height * 0.6,
-                  width: size.width,
-                  child: SingleChildScrollView(
+                    height: size.height * 0.7,
+                    width: size.width,
                     child: Container(
                       margin: EdgeInsets.only(top: 50),
                       child: Column(
                         children: [
                           Text(
-                            currentPokemon.name,
+                            _controller.currentPokemon.name,
                             style: TextStyle(
                               fontSize: 24,
                               color: Colors.black54,
@@ -81,30 +89,28 @@ class _DetailsPokedexPageState extends State<DetailsPokedexPage> {
                 ),
               ],
             ),
-          ),
-          _pageViewPokemons(),
-        ],
-      ),
-    );
+            _pageViewPokemons(),
+          ],
+        ),
+      );
+    });
   }
 
   _pageViewPokemons() {
     return PageView.builder(
-      controller: _pageController,
+      controller: _pageviewController,
       itemCount: widget.pokemons.length,
       onPageChanged: (int page) {
-        currentPokemon = widget.pokemons[page];
-
-        setState(() {});
+        _controller.store.changeCurrentPokemon(pokemons[page]);
       },
       itemBuilder: (context, index) {
         return Hero(
-          tag: currentPokemon.imageUrl,
+          tag: _controller.currentPokemon.imageUrl,
           child: Container(
             transform: Matrix4.translationValues(0.0, -150, 0.0),
             child: Center(
               child: Image.network(
-                currentPokemon.imageUrl,
+                _controller.currentPokemon.imageUrl,
                 scale: 3,
               ),
             ),
@@ -118,7 +124,7 @@ class _DetailsPokedexPageState extends State<DetailsPokedexPage> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: currentPokemon.types
+        children: _controller.currentPokemon.types
             .map<Widget>((e) => Container(
                   padding: EdgeInsets.only(right: 10),
                   child: Chip(
