@@ -19,12 +19,6 @@ class PokemonRepository {
           final pokemon = await getPokemonByUrl(item['url']);
           pokemonList.add(pokemon);
         }
-        // await listResult.map((item) async {
-        //   print(item);
-        //   final pokemon = await getPokemonByUrl(item['url']);
-        //   print(pokemon);
-        //   pokemonList.add(pokemon);
-        // });
         return pokemonList;
       } else {
         throw Exception("Erro ao acessar a api");

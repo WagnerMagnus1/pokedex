@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
               controller: searchController,
               onChanged: (String text) {
                 setState(() {
-                listPokemonsFilted = getPokemonFiltered(text);
+                  listPokemonsFilted = getPokemonFiltered(text);
                 });
               },
               keyboardType: TextInputType.text,
@@ -126,10 +126,7 @@ class _HomePageState extends State<HomePage> {
                         decoration: BoxDecoration(
                           color: white,
                           shape: BoxShape.circle,
-                          boxShadow: [
-                            BoxShadow(
-                                blurRadius: 10, color: mono2, spreadRadius: 1)
-                          ],
+                          boxShadow: [BoxShadow(blurRadius: 10, color: mono2, spreadRadius: 1)],
                         ),
                         child: CircleAvatar(
                           backgroundColor: type.imageColorAvatar,
@@ -150,10 +147,11 @@ class _HomePageState extends State<HomePage> {
               selected: true,
               onTap: () {
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            DetailsPokedexPage(widget.pokemons, index)));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailsPokedexPage(widget.pokemons, index),
+                  ),
+                );
               },
             );
           },

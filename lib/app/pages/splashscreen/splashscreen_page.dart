@@ -33,6 +33,7 @@ class _SplashscreenPageState extends State<SplashscreenPage> {
     return Scaffold(
       body: Container(
         height: double.infinity,
+        width: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
